@@ -21,13 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.sendbird.datinglab.activities.AlternativeLoginActivity"
-            android:theme="@style/BlackStatusBar"/>
-        <activity android:name="com.sendbird.datinglab.activities.EmailVerificationActivity"
-            android:theme="@style/BlackStatusBar"/>
-        <activity android:name="com.sendbird.datinglab.activities.PhoneVerificationActivity"
-            android:theme="@style/BlackStatusBar"/>
-        <activity
             android:name="com.sendbird.datinglab.activities.StartActivity"
             android:theme="@style/BlackStatusBar"/>
         <activity
