@@ -8,8 +8,7 @@
 
 <a name="credits"></a>
 ## Credits
-This dating app UI of this app was taken from https://github.com/gabriel-TheCode/TinderClone.
-- [Material Components for Android](https://github.com/material-components/material-components-android)
+The UI portion of this app was taken from https://github.com/gabriel-TheCode/TinderClone.
 
 ## License
 Apache 2.0 license.
