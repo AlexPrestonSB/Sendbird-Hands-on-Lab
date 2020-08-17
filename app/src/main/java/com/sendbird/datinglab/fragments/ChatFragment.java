@@ -69,9 +69,9 @@ public class ChatFragment extends Fragment {
         LikeAdapter contactAdapter = new LikeAdapter(getContext(), likeList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerViewContact =  rootLayout.findViewById(R.id.recycler_view_likes);
-        recyclerViewContact.setLayoutManager(layoutManager);
-        recyclerViewContact.setAdapter(contactAdapter);
+//        RecyclerView recyclerViewContact =  rootLayout.findViewById(R.id.recycler_view_likes);
+////        recyclerViewContact.setLayoutManager(layoutManager);
+////        recyclerViewContact.setAdapter(contactAdapter);
         //new HorizontalOverScrollBounceEffectDecorator(new RecyclerViewOverScrollDecorAdapter(recyclerViewContact));
 
 

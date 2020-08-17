@@ -42,9 +42,9 @@ public class ActivityFragment extends Fragment implements View.OnClickListener, 
         rootLayout = inflater.inflate(R.layout.fragment_activity, container, false);
         mContext = getContext();
         chatLayout = rootLayout.findViewById(R.id.layout_chat);
-        feedLayout = rootLayout.findViewById(R.id.layout_feed);
+        //feedLayout = rootLayout.findViewById(R.id.layout_feed);
         chatText = rootLayout.findViewById(R.id.text_chat);
-        feedText = rootLayout.findViewById(R.id.text_feed);
+        //feedText = rootLayout.findViewById(R.id.text_feed);
 
         ArrayList<Fragment> fragList = new ArrayList<>();
         fragList.add(new ChatFragment());
@@ -55,7 +55,7 @@ public class ActivityFragment extends Fragment implements View.OnClickListener, 
 
         viewPager.addOnPageChangeListener(this);
         chatLayout.setOnClickListener(this);
-        feedLayout.setOnClickListener(this);
+        //feedLayout.setOnClickListener(this);
 
         return rootLayout;
     }
@@ -67,13 +67,13 @@ public class ActivityFragment extends Fragment implements View.OnClickListener, 
             case R.id.layout_chat:
                 viewPager.setCurrentItem(0);
                 chatText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                feedText.setTextColor(getResources().getColor(R.color.light_gray));
+               // feedText.setTextColor(getResources().getColor(R.color.light_gray));
                 break;
-            case R.id.layout_feed:
-                viewPager.setCurrentItem(1);
-                chatText.setTextColor(getResources().getColor(R.color.light_gray));
-                feedText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
+//            case R.id.layout_feed:
+//                viewPager.setCurrentItem(1);
+//                chatText.setTextColor(getResources().getColor(R.color.light_gray));
+//                feedText.setTextColor(getResources().getColor(R.color.colorPrimary));
+//                break;
 
         }
     }
@@ -88,11 +88,11 @@ public class ActivityFragment extends Fragment implements View.OnClickListener, 
         switch (position) {
             case 0:
                 chatText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                feedText.setTextColor(getResources().getColor(R.color.light_gray));
+                //feedText.setTextColor(getResources().getColor(R.color.light_gray));
                 break;
             case 1:
                 chatText.setTextColor(getResources().getColor(R.color.light_gray));
-                feedText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                //feedText.setTextColor(getResources().getColor(R.color.colorPrimary));
                 break;
         }
     }

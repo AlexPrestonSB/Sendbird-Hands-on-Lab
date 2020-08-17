@@ -2,9 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.StartActivity"
+    tools:context=".activities.BaseActivity"
     android:background="@drawable/rect_gradient_bg"
     android:orientation="vertical">
 
@@ -15,64 +16,87 @@
         android:src="@drawable/tinder_logo_text"
         android:layout_marginTop="150dp"/>
 
-
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_layout"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:layout_centerInParent="true"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginTop="40dp"
+        app:boxStrokeColor="@color/ondark_01"
+        app:hintTextColor="@color/ondark_01"
+        app:boxBackgroundMode="outline"
+        >
 
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etUserId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="En appuyant sur Connexion, vous acceptez nos Conditions générales et notre Politique de confidentialité"
-            android:gravity="center"
-            android:textColor="@color/white"/>
+            android:hint="User ID"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:imeOptions="actionNext"
+            android:inputType="text">
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
 
-        <Button
-            android:id="@+id/btn_facebook_connect"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="se connecter via facebook"
-            fontPath="fonts/Poppins-Medium.ttf"
-            android:textColor="@color/white"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/btn_blue_selector"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_number_connect"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="identifiez vous avec votre numero de telephone"
-            fontPath="fonts/Poppins-Medium.ttf"
-            android:textColor="@color/white"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/btn_outline_bg"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/nickname_layout"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_below="@+id/user_layout"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:hintTextColor="@color/ondark_01"
+        app:boxBackgroundMode="outline"
+        android:layout_marginTop="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Probleme de connexion ?"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/white"/>
-
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Nous ne publions rien sur Facebook"
-            android:gravity="center"
-            android:textColor="@color/white"/>
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:hint="Nickname"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_below="@+id/nickname_layout"
+        android:id="@+id/btSignIn"
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:background="@color/md_pink_400"
+        android:layout_height="48dp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/ondark_01"
+        android:lineSpacingExtra="2sp"
+        android:text="Sign In"/>
+    
 
 
 </RelativeLayout>
