@@ -8,41 +8,51 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sendbird.android.GroupChannel;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.entities.MessageItem;
+import com.sendbird.uikit.activities.adapter.ChannelListAdapter;
+import com.sendbird.uikit.activities.viewholder.BaseViewHolder;
 
 import java.util.List;
 
-public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MyViewHolder> {
+public class MessageListAdapter extends ChannelListAdapter {
     private Context context;
-    private List<MessageItem> messageList;
+    private List<GroupChannel> messageList;
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name, content, count;
+    class MyViewHolder extends BaseViewHolder<GroupChannel> {
+        TextView name, message;
         ImageView thumbnail;
         RelativeLayout viewIndicator;
 
-        MyViewHolder(View view) {
+        MyViewHolder(@NonNull View view) {
             super(view);
             name = view.findViewById(R.id.text_name);
-            content = view.findViewById(R.id.text_content);
+            message = view.findViewById(R.id.text_content);
             thumbnail = view.findViewById(R.id.thumbnail);
             viewIndicator = view.findViewById(R.id.layout_dot_indicator);
+        }
 
+        @Override
+        public void bind(GroupChannel item) {
+            name.setText(item.getName());
+            message.setText(item.getLastMessage().getMessage());
+            Glide.with(context).load(item.getCoverUrl()).into(thumbnail);
         }
     }
 
 
-    public MessageListAdapter(Context context, List<MessageItem> messageList) {
+    public MessageListAdapter(Context context, List<GroupChannel> messageList) {
         this.context = context;
         this.messageList = messageList;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder<GroupChannel> onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_message_item, parent, false);
 
@@ -50,18 +60,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final MessageItem item = messageList.get(position);
-        holder.name.setText(item.getName());
-        holder.content.setText(item.getContent());
-
-        if(item.getCount() <= 0){
-            holder.viewIndicator.setVisibility(View.INVISIBLE);
-        }
-
-        Glide.with(context)
-                .load(item.getPicture())
-                .into(holder.thumbnail);
+    public void onBindViewHolder(BaseViewHolder<GroupChannel> holder, final int position) {
+        //holder.bind(messageList.get(position));
+        super.onBindViewHolder(holder,position);
     }
 
     @Override

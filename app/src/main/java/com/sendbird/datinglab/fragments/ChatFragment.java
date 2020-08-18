@@ -12,12 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.activities.MainActivity;
 import com.sendbird.datinglab.adapters.LikeAdapter;
 import com.sendbird.datinglab.adapters.MessageListAdapter;
 import com.sendbird.datinglab.entities.Like;
 import com.sendbird.datinglab.entities.MessageItem;
+import com.sendbird.uikit.SendBirdUIKit;
+import com.sendbird.uikit.fragments.ChannelListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +35,9 @@ public class ChatFragment extends Fragment {
 
     View rootLayout;
     private static final String TAG = MainActivity.class.getSimpleName();
-    private List<MessageItem> messageList;
-    private List<Like> likeList;
+    private List<GroupChannel> messageList;
     private MessageListAdapter mAdapter;
-    private String[] messages = {"Ah d'accord", "Juste par habitude en tout cas", "Hey!", "6946743263", "Give me your number, I will call you"};
-    private int[] counts = {0, 3, 0, 0, 1};
-    private int[] messagePictures = {R.drawable.user_woman_3, R.drawable.user_woman_4, R.drawable.user_woman_5, R.drawable.user_woman_6 , R.drawable.user_woman_7};
-    private int[] likePictures = {R.drawable.user_woman_1, R.drawable.user_woman_2};
-    private String[] messageNames = {"Fanelle", "Chloe", "Cynthia", "Kate", "Angele"};
-    private String[] likeNames = {"Sophie", "Clara"};
+
 
     public ChatFragment() {
         // Required empty public constructor
@@ -52,9 +50,18 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         rootLayout = inflater.inflate(R.layout.fragment_chat, container, false);
 
+
+
         RecyclerView recyclerView = rootLayout.findViewById(R.id.recycler_view_messages);
         messageList = new ArrayList<>();
         mAdapter = new MessageListAdapter(getContext(), messageList);
+
+
+
+        GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
+
+        ChannelListFragment fragment = new ChannelListFragment.Builder().setChannelListAdapter(mAdapter).setGroupChannelListQuery(query).build();
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -62,43 +69,11 @@ public class ChatFragment extends Fragment {
         //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
-        prepareMessageList();
 
 
-        prepareContactList();
-        LikeAdapter contactAdapter = new LikeAdapter(getContext(), likeList);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView recyclerViewContact =  rootLayout.findViewById(R.id.recycler_view_likes);
-////        recyclerViewContact.setLayoutManager(layoutManager);
-////        recyclerViewContact.setAdapter(contactAdapter);
-        //new HorizontalOverScrollBounceEffectDecorator(new RecyclerViewOverScrollDecorAdapter(recyclerViewContact));
 
 
         return rootLayout;
-    }
-
-
-    private void prepareMessageList(){
-
-        Random rand = new Random();
-        int id = rand.nextInt(100);
-        int i;
-        for(i=0; i<5; i++) {
-            MessageItem message = new MessageItem(id, messageNames[i], messages[i], counts[i], messagePictures[i]);
-            messageList.add(message);
-        }
-    }
-
-    private void prepareContactList(){
-        likeList = new ArrayList<>();
-        Random rand = new Random();
-        int id = rand.nextInt(100);
-        int i;
-        for(i=0; i<2; i++) {
-            Like like = new Like(id, likeNames[i], likePictures[i]);
-            likeList.add(like);
-        }
     }
 
 

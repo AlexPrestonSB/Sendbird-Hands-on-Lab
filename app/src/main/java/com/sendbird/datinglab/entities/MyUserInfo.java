@@ -15,12 +15,12 @@ public class MyUserInfo implements UserInfo {
 
     @Override
     public String getUserId() {
-        return userId;
+        return "newUser";
     }
 
     @Override
     public String getNickname() {
-        return nickname;
+        return "newUser";
     }
 
     @Override

@@ -24,6 +24,9 @@
         <activity
             android:name="com.sendbird.datinglab.activities.MainActivity"
             android:theme="@style/BlackStatusBar"/>
+        <activity
+            android:name="com.sendbird.datinglab.activities.LoginActivity"
+            android:theme="@style/BlackStatusBar"/>
     </application>
 
 </manifest>
