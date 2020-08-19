@@ -6,24 +6,30 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.datinglab.R;
+import com.sendbird.datinglab.adapters.MessageListAdapter;
 import com.sendbird.datinglab.adapters.ViewPagerAdapter;
 import com.sendbird.datinglab.fragments.AccountFragment;
 import com.sendbird.datinglab.fragments.ActivityFragment;
 import com.sendbird.datinglab.fragments.SwipeViewFragment;
+import com.sendbird.uikit.activities.ChannelListActivity;
+import com.sendbird.uikit.fragments.ChannelListFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private Context mContext;
     private ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         bnv.setOnNavigationItemSelectedListener(this);
+
     }
 
     @Override

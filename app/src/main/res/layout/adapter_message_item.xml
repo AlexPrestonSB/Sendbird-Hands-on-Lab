@@ -32,15 +32,6 @@
                 android:layout_height="80dp"
                 tools:src="@tools:sample/avatars[9]"/>
 
-            <RelativeLayout
-                android:id="@+id/layout_dot_indicator"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:padding="2dp"
-                android:background="@drawable/dot_message"
-                android:layout_toEndOf="@id/thumbnail"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="-5dp"/>
         </RelativeLayout>
 
 
