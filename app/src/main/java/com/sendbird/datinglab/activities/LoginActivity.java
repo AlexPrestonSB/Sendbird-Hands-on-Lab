@@ -15,7 +15,6 @@ import com.sendbird.datinglab.entities.MyUserInfo;
 import com.sendbird.uikit.BuildConfig;
 import com.sendbird.uikit.SendBirdUIKit;
 import com.sendbird.uikit.log.Logger;
-import com.sendbird.uikit.utils.TextUtils;
 import com.sendbird.uikit.widgets.WaitingDialog;
 
 public class LoginActivity extends AppCompatActivity {

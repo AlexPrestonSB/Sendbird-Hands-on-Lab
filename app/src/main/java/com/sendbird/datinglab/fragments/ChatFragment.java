@@ -1,7 +1,6 @@
 package com.sendbird.datinglab.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,25 +10,24 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.activities.MainActivity;
-import com.sendbird.datinglab.adapters.MessageListAdapter;
-import com.sendbird.uikit.activities.ChannelActivity;
 import com.sendbird.uikit.fragments.ChannelListFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatFragment extends Fragment implements MessageListAdapter.onItemClickListener {
+public class ChatFragment extends Fragment {
 
 
     View rootLayout;
     private static final String TAG = MainActivity.class.getSimpleName();
-    private MessageListAdapter mAdapter;
+    private RelativeLayout chatLayout;
 
 
     public ChatFragment() {
@@ -43,21 +41,13 @@ public class ChatFragment extends Fragment implements MessageListAdapter.onItemC
         // Inflate the layout for this fragment
         rootLayout = inflater.inflate(R.layout.fragment_chat, container, false);
 
-
-        mAdapter = new MessageListAdapter(getContext());
-
         GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
 
-        ChannelListFragment.Builder builder = new ChannelListFragment.Builder()
-                .setChannelListAdapter(mAdapter)
+        ChannelListFragment.Builder builder = new ChannelListFragment
+                .Builder()
+                .setCustomChannelListFragment(new CustomChannelListFragment())
                 .setUseHeader(false)
                 .setGroupChannelListQuery(query);
-
-//        builder.setItemClickListener((view, position, data) -> {
-//            view.getId()
-//            Intent intent = ChannelActivity.newIntent(getContext(), data.getUrl());
-//            startActivity(intent);
-//        });
 
         ChannelListFragment fragment = builder.build();
 
@@ -71,14 +61,4 @@ public class ChatFragment extends Fragment implements MessageListAdapter.onItemC
         return rootLayout;
     }
 
-    @Override
-    public void onItemClick(int position, View v) {
-        Intent intent = ChannelActivity.newIntent(getContext(), v.get);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onItemLongClick(int position, View v) {
-
-    }
 }
