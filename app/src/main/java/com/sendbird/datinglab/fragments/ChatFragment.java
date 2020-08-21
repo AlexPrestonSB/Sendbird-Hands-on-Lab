@@ -17,6 +17,7 @@ import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.activities.MainActivity;
 import com.sendbird.uikit.fragments.ChannelListFragment;
+import com.sendbird.uikit.widgets.ChannelSettingsView;
 
 
 /**
@@ -45,7 +46,6 @@ public class ChatFragment extends Fragment {
 
         ChannelListFragment.Builder builder = new ChannelListFragment
                 .Builder()
-                .setCustomChannelListFragment(new CustomChannelListFragment())
                 .setUseHeader(false)
                 .setGroupChannelListQuery(query);
 
@@ -57,6 +57,7 @@ public class ChatFragment extends Fragment {
         transaction
                 .replace(R.id.chat_fragment, fragment)
                 .commit();
+
 
         return rootLayout;
     }

@@ -12,6 +12,9 @@ public class BaseActivity extends Application {
     public void onCreate() {
         super.onCreate();
 
+        /**
+         * TODO SENDBIRD CODE FOR UIKIT HERE
+         */
         SendBirdUIKit.init(new SendBirdUIKitAdapter() {
             @Override
             public String getAppId() {

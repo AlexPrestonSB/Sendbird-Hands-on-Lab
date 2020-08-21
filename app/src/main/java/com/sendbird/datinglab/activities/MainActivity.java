@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.adapters.ViewPagerAdapter;
 import com.sendbird.datinglab.fragments.AccountFragment;
 import com.sendbird.datinglab.fragments.ChatFragment;
 import com.sendbird.datinglab.fragments.SwipeViewFragment;
+import com.sendbird.uikit.fragments.ChannelFragment;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mContext = this;
 
         BottomNavigationView bnv = findViewById(R.id.bottom_navigation);
+
+        /**
+         *  GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
+         *
+         *         ChannelListFragment.Builder builder = new ChannelListFragment
+         *                 .Builder()
+         *                 .setUseHeader(false)
+         *                 .setGroupChannelListQuery(query);
+         *
+         *         ChannelListFragment fragment = builder.build();
+         */
+
+        GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
+
+        com.sendbird.uikit.fragments.ChannelListFragment.Builder builder = new com.sendbird.uikit.fragments.ChannelListFragment.Builder()
+                .setUseHeader(false)
+                .setGroupChannelListQuery(query);
+
+        com.sendbird.uikit.fragments.ChannelListFragment fragment = builder.build();
 
         ArrayList<Fragment> fragList = new ArrayList<>();
         fragList.add(new AccountFragment());

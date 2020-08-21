@@ -2,17 +2,13 @@ package com.sendbird.datinglab.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sendbird.android.SendBird;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.entities.MyUserInfo;
-import com.sendbird.uikit.BuildConfig;
 import com.sendbird.uikit.SendBirdUIKit;
 import com.sendbird.uikit.log.Logger;
 import com.sendbird.uikit.widgets.WaitingDialog;
@@ -31,7 +27,9 @@ public class LoginActivity extends AppCompatActivity {
         etUserId.setSelectAllOnFocus(true);
         etNickname.setSelectAllOnFocus(true);
 
-
+        /**
+         * TODO SENDBIRD CODE FOR UIKIT HERE
+         */
         findViewById(R.id.btSignIn).setOnClickListener(v -> {
             String userId = etUserId.getText().toString();
             // Remove all spaces from userID
@@ -40,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             String userNickname = etNickname.getText().toString();
 //            if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(userNickname)) {
 //                return;
-//            }
+//            } //TODO remove when needed
 
             MyUserInfo userInfo = new MyUserInfo();
             userInfo.setUserInfo(userId, userNickname);
