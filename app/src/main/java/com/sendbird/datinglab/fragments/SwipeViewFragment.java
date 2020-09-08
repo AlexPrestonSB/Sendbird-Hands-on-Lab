@@ -44,8 +44,9 @@ import java.util.List;
 public class SwipeViewFragment extends Fragment {
 
 
+    final private String SWIPE_FRAGMENT = "SWIPE_FRAGMENT";
     private View rootLayout;
-    private FloatingActionButton fabBack, fabLike, fabSkip, fabSuperLike, fabBoost;
+    private FloatingActionButton fabLike, fabSkip;
 
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
@@ -92,7 +93,7 @@ public class SwipeViewFragment extends Fragment {
 
 
         /**
-         * Sendbird
+         * TODO SENDBIRD
          */
 
         ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
@@ -101,16 +102,18 @@ public class SwipeViewFragment extends Fragment {
 
         query.next((list, e) -> {
             if (e != null) {
+                Log.e(SWIPE_FRAGMENT, e.getMessage());
                 return;
             }
 
             users = list;
             for (User user : list) {
-                mSwipeView.addView(new TinderCard(mContext, user, mSwipeView));
+                if (!user.getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                    mSwipeView.addView(new TinderCard(mContext, user, mSwipeView));
+                }
             }
 
         });
-
 
 
 
@@ -136,6 +139,10 @@ public class SwipeViewFragment extends Fragment {
         fab.animate().scaleX(0.7f).setDuration(100).withEndAction(() -> fab.animate().scaleX(1f).scaleY(1f));
     }
 
+    /**
+     * TODO SENDBIRD
+     * @param user
+     */
     private void createChannelWithMatch(User user) {
         GroupChannelParams params = new GroupChannelParams();
 
@@ -145,9 +152,10 @@ public class SwipeViewFragment extends Fragment {
             @Override
             public void onResult(GroupChannel groupChannel, SendBirdException e) {
                 if (e != null) {
+                    Log.e(SWIPE_FRAGMENT, e.getMessage());
                     return;
                 }
-                Log.e("test", "test");
+
             }
         });
     }

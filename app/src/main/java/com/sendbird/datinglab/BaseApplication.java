@@ -31,7 +31,7 @@ public class BaseApplication extends Application {
         SendBirdUIKit.init(new SendBirdUIKitAdapter() {
             @Override
             public String getAppId() {
-                return "B6DCC89A-9D92-4012-B354-CC41A1BAC5DF";
+                return "C659F842-231B-44B2-92A0-FB92A2328875";
             }
 
             @Override

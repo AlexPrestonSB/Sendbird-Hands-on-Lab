@@ -35,8 +35,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
@@ -46,67 +46,26 @@
 
 
                 <TextView
+                    android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Gabriel, 24"
                     android:textColor="@color/md_black_1000"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
 
 
                 <TextView
+                    android:id="@+id/profile_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Developer"
                     android:textColor="@color/md_black_1000"
-                    android:textSize="14sp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_margin="20dp">
-
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_marginBottom="5dp"
-                            android:clickable="true"
-                            android:elevation="2dp"
-                            android:focusable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:src="@drawable/ic_edit_gray_24dp" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:maxLines="2"
-                            android:text="Edit Information"
-                            android:textAllCaps="true"
-                            android:textColor="@color/md_grey_400"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-                </RelativeLayout>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="64dp"/>
 
 
             </LinearLayout>
