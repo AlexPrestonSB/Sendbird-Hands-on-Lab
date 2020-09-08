@@ -1,4 +1,4 @@
-package com.sendbird.datinglab;
+package com.sendbird.datinglab.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;

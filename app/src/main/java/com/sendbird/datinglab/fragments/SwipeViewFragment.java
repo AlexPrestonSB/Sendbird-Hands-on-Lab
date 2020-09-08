@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,25 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.sendbird.android.ApplicationUserListQuery;
+import com.sendbird.android.BaseChannel;
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelParams;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
+import com.sendbird.android.UserListQuery;
+import com.sendbird.android.UserMessage;
+import com.sendbird.datinglab.BaseApplication;
 import com.sendbird.datinglab.R;
-import com.sendbird.datinglab.Utils;
+import com.sendbird.datinglab.utils.Utils;
 import com.sendbird.datinglab.entities.Profile;
 import com.sendbird.datinglab.entities.TinderCard;
+import com.sendbird.uikit.SendBirdUIKit;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +49,8 @@ public class SwipeViewFragment extends Fragment {
 
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
+
+    private List<User> users;
 
     public SwipeViewFragment() {
         // Required empty public constructor
@@ -53,11 +71,8 @@ public class SwipeViewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSwipeView = view.findViewById(R.id.swipeView);
-        fabBack = view.findViewById(R.id.fabBack);
         fabLike = view.findViewById(R.id.fabLike);
         fabSkip = view.findViewById(R.id.fabSkip);
-        fabSuperLike = view.findViewById(R.id.fabSuperLike);
-        fabBoost = view.findViewById(R.id.fabBoost);
 
 
         mContext = getActivity();
@@ -76,9 +91,28 @@ public class SwipeViewFragment extends Fragment {
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
 
 
-        for(Profile profile : Utils.loadProfiles(getActivity())){
-            mSwipeView.addView(new TinderCard(mContext, profile, mSwipeView));
-        }
+        /**
+         * Sendbird
+         */
+
+        ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
+        query.setLimit(100); //Whatever you want
+        query.setMetaDataFilter("dating", Collections.singletonList("True"));
+
+        query.next((list, e) -> {
+            if (e != null) {
+                return;
+            }
+
+            users = list;
+            for (User user : list) {
+                mSwipeView.addView(new TinderCard(mContext, user, mSwipeView));
+            }
+
+        });
+
+
+
 
         fabSkip.setOnClickListener(v -> {
             animateFab(fabSkip);
@@ -87,17 +121,35 @@ public class SwipeViewFragment extends Fragment {
 
         fabLike.setOnClickListener(v -> {
             animateFab(fabLike);
+            //Create new Channel
+            TinderCard user = (TinderCard) mSwipeView.getAllResolvers().get(0);
+            User profile = user.getUser();
+            createChannelWithMatch(profile);
+
             mSwipeView.doSwipe(true);
         });
 
-        fabBoost.setOnClickListener(v -> animateFab(fabBoost));
-        fabSuperLike.setOnClickListener(v -> animateFab(fabSuperLike));
-        fabBack.setOnClickListener(v -> animateFab(fabBack));
     }
 
 
     private void animateFab(final FloatingActionButton fab){
         fab.animate().scaleX(0.7f).setDuration(100).withEndAction(() -> fab.animate().scaleX(1f).scaleY(1f));
+    }
+
+    private void createChannelWithMatch(User user) {
+        GroupChannelParams params = new GroupChannelParams();
+
+        params.addUser(user);
+
+        GroupChannel.createChannel(params, new GroupChannel.GroupChannelCreateHandler() {
+            @Override
+            public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                if (e != null) {
+                    return;
+                }
+                Log.e("test", "test");
+            }
+        });
     }
 
 }

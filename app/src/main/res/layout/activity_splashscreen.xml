@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/sendbird_purple"
     android:layout_height="match_parent"
     tools:context=".activities.SplashscreenActivity"
     android:gravity="center">
 
-
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_tinder_logo"/>
-
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_sendbird_full"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

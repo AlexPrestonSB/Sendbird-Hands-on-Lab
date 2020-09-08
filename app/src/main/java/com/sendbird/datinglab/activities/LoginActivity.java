@@ -7,6 +7,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.sendbird.android.User;
+import com.sendbird.datinglab.BaseApplication;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.entities.MyUserInfo;
 import com.sendbird.uikit.SendBirdUIKit;
@@ -40,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 //                return;
 //            } //TODO remove when needed
 
-            MyUserInfo userInfo = new MyUserInfo();
-            userInfo.setUserInfo(userId, userNickname);
+            ((BaseApplication)getApplication()).setUserId(userId);
+            ((BaseApplication)getApplication()).setUserNickname(userNickname);
 
             WaitingDialog.show(this);
             SendBirdUIKit.connect((user, e) -> {

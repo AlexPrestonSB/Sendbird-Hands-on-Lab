@@ -41,7 +41,6 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:elevation="4dp"
-                    android:src="@drawable/user_man"
                     app:layout_anchorGravity="top|center_horizontal"
                     app:layout_scrollFlags="scroll" />
 

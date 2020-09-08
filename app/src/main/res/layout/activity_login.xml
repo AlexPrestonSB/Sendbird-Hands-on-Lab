@@ -5,21 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.BaseActivity"
-    android:background="@drawable/rect_gradient_bg"
+    tools:context=".BaseApplication"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:src="@drawable/tinder_logo_text"
-        android:layout_marginTop="150dp"/>
+        android:src="@drawable/logo_sendbird_purple"
+        android:layout_marginTop="200dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_layout"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:background="@color/text_field_gray"
         android:layout_width="match_parent"
         android:layout_centerInParent="true"
         android:layout_height="56dp"
@@ -28,7 +29,7 @@
         android:paddingRight="16dp"
         android:layout_marginTop="40dp"
         app:boxStrokeColor="@color/ondark_01"
-        app:hintTextColor="@color/ondark_01"
+        app:hintTextColor="@color/sendbird_purple"
         app:boxBackgroundMode="outline"
         >
 
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:hint="User ID"
             android:maxLines="1"
+            android:textColor="@color/sendbird_purple"
             android:paddingStart="0dp"
             android:paddingEnd="0dp"
             android:paddingLeft="0dp"
@@ -61,7 +63,9 @@
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        app:hintTextColor="@color/ondark_01"
+        android:background="@color/text_field_gray"
+        app:boxStrokeColor="@color/ondark_01"
+        app:hintTextColor="@color/sendbird_purple"
         app:boxBackgroundMode="outline"
         android:layout_marginTop="16dp">
 
@@ -70,6 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="0dp"
+            android:textColorHint="@color/sendbird_purple"
+            android:textColor="@color/sendbird_purple"
             android:paddingEnd="0dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
@@ -88,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        android:background="@color/md_pink_400"
+        android:background="@color/sendbird_purple"
         android:layout_height="48dp"
         android:textSize="14sp"
         android:fontFamily="sans-serif"

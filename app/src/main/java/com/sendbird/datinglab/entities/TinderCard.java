@@ -15,6 +15,7 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
 import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
+import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
 
 @Layout(R.layout.adapter_tinder_card)
@@ -29,21 +30,25 @@ public class TinderCard {
     @View(R.id.locationNameTxt)
     private TextView locationNameTxt;
 
-    private Profile mProfile;
+    private User mUser;
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
-    public TinderCard(Context context, Profile profile, SwipePlaceHolderView swipeView) {
+    public TinderCard(Context context, User user, SwipePlaceHolderView swipeView) {
         mContext = context;
-        mProfile = profile;
+         mUser = user;
         mSwipeView = swipeView;
+    }
+
+    public User getUser() {
+        return mUser;
     }
 
     @Resolve
     private void onResolved(){
-        Glide.with(mContext).load(mProfile.getImageUrl()).into(profileImageView);
-        nameAgeTxt.setText(mProfile.getName() + ", " + mProfile.getAge());
-        locationNameTxt.setText(mProfile.getLocation());
+        Glide.with(mContext).load(mUser.getProfileUrl()).into(profileImageView);
+        nameAgeTxt.setText(mUser.getNickname() + ", 25");
+        locationNameTxt.setText("San Mateo");
     }
 
     @SwipeOut

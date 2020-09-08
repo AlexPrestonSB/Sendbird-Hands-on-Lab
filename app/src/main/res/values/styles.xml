@@ -3,9 +3,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/md_black_1000</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/sendbird_purple</item>
         <item name="elevation">0dp</item>
         <item name="colorControlNormal">@color/md_white_1000</item>
         <!--  It should be true otherwise action mode will not overlay toolbar -->
