@@ -18,7 +18,7 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
 
-@Layout(R.layout.adapter_tinder_card)
+@Layout(R.layout.adapter_dating_card)
 public class DatingCard {
 
     @View(R.id.profileImageView)
