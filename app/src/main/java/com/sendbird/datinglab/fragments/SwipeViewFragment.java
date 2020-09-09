@@ -26,7 +26,8 @@ import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.utils.Utils;
-import com.sendbird.datinglab.entities.TinderCard;
+import com.sendbird.datinglab.entities.DatingCard;
+import com.sendbird.uikit.log.Logger;
 
 import java.util.Collections;
 
@@ -89,6 +90,7 @@ public class SwipeViewFragment extends Fragment {
         ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
         query.setLimit(100); //Whatever you want
         query.setMetaDataFilter("dating", Collections.singletonList("True"));
+        query.setMetaDataFilter("sex", Collections.singletonList("female"));
 
         query.next((list, e) -> {
             if (e != null) {
@@ -98,7 +100,7 @@ public class SwipeViewFragment extends Fragment {
 
             for (User user : list) {
                 if (!user.getUserId().equals(SendBird.getCurrentUser().getUserId())) {
-                    mSwipeView.addView(new TinderCard(mContext, user, mSwipeView));
+                    mSwipeView.addView(new DatingCard(mContext, user, mSwipeView));
                 }
             }
 
@@ -115,7 +117,7 @@ public class SwipeViewFragment extends Fragment {
             animateFab(fabLike);
 
             //TODO SENDBIRD IMPL
-            TinderCard user = (TinderCard) mSwipeView.getAllResolvers().get(0);
+            DatingCard user = (DatingCard) mSwipeView.getAllResolvers().get(0);
             User profile = user.getUser();
             createChannelWithMatch(profile);
             //END
@@ -140,15 +142,13 @@ public class SwipeViewFragment extends Fragment {
         params.setDistinct(true)
                 .addUser(user);
 
-        GroupChannel.createChannel(params, new GroupChannel.GroupChannelCreateHandler() {
-            @Override
-            public void onResult(GroupChannel groupChannel, SendBirdException e) {
-                if (e != null) {
-                    Log.e(SWIPE_FRAGMENT, e.getMessage());
-                    return;
-                }
-
+        GroupChannel.createChannel(params, (groupChannel, e) -> {
+            if (e != null) {
+                Logger.e(e.getMessage());
+                return;
             }
+            Logger.d(groupChannel.getUrl() + ": Channel Created");
+
         });
     }
 

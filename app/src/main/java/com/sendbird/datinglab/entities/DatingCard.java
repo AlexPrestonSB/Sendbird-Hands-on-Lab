@@ -19,7 +19,7 @@ import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
 
 @Layout(R.layout.adapter_tinder_card)
-public class TinderCard {
+public class DatingCard {
 
     @View(R.id.profileImageView)
     private ImageView profileImageView;
@@ -35,7 +35,7 @@ public class TinderCard {
     private SwipePlaceHolderView mSwipeView;
 
     //TODO SENDBIRD
-    public TinderCard(Context context, User user, SwipePlaceHolderView swipeView) {
+    public DatingCard(Context context, User user, SwipePlaceHolderView swipeView) {
         mContext = context;
          mUser = user;
         mSwipeView = swipeView;

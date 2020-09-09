@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         etNickname.setSelectAllOnFocus(true);
 
         /**
-         * TODO SENDBIRD CODE FOR UIKIT HERE
+         * TODO SENDBIRD
          */
         findViewById(R.id.btSignIn).setOnClickListener(v -> {
             String userId = etUserId.getText().toString();
