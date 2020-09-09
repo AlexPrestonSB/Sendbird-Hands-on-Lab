@@ -19,24 +19,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.sendbird.android.ApplicationUserListQuery;
-import com.sendbird.android.BaseChannel;
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelParams;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
-import com.sendbird.android.UserListQuery;
-import com.sendbird.android.UserMessage;
-import com.sendbird.datinglab.BaseApplication;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.utils.Utils;
-import com.sendbird.datinglab.entities.Profile;
 import com.sendbird.datinglab.entities.TinderCard;
-import com.sendbird.uikit.SendBirdUIKit;
 
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,8 +42,6 @@ public class SwipeViewFragment extends Fragment {
 
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
-
-    private List<User> users;
 
     public SwipeViewFragment() {
         // Required empty public constructor
@@ -106,7 +96,6 @@ public class SwipeViewFragment extends Fragment {
                 return;
             }
 
-            users = list;
             for (User user : list) {
                 if (!user.getUserId().equals(SendBird.getCurrentUser().getUserId())) {
                     mSwipeView.addView(new TinderCard(mContext, user, mSwipeView));
@@ -115,7 +104,7 @@ public class SwipeViewFragment extends Fragment {
 
         });
 
-
+        //END
 
         fabSkip.setOnClickListener(v -> {
             animateFab(fabSkip);
@@ -124,10 +113,12 @@ public class SwipeViewFragment extends Fragment {
 
         fabLike.setOnClickListener(v -> {
             animateFab(fabLike);
-            //Create new Channel
+
+            //TODO SENDBIRD IMPL
             TinderCard user = (TinderCard) mSwipeView.getAllResolvers().get(0);
             User profile = user.getUser();
             createChannelWithMatch(profile);
+            //END
 
             mSwipeView.doSwipe(true);
         });

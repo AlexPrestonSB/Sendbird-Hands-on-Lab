@@ -38,9 +38,9 @@ public class LoginActivity extends AppCompatActivity {
             userId = userId.replaceAll("\\s", "");
 
             String userNickname = etNickname.getText().toString();
-//            if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(userNickname)) {
-//                return;
-//            } //TODO remove when needed
+            if (userId.isEmpty() || userNickname.isEmpty()) {
+                return;
+            }
 
             ((BaseApplication)getApplication()).setUserId(userId);
             ((BaseApplication)getApplication()).setUserNickname(userNickname);

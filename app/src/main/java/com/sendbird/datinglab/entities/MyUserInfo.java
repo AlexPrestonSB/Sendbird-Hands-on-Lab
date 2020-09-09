@@ -3,6 +3,9 @@ package com.sendbird.datinglab.entities;
 import com.sendbird.android.User;
 import com.sendbird.uikit.interfaces.UserInfo;
 
+/**
+ * TODO SENDBIRD
+ */
 public class MyUserInfo implements UserInfo {
 
     User user;

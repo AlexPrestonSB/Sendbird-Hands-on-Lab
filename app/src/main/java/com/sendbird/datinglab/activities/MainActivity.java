@@ -18,6 +18,7 @@ import com.sendbird.datinglab.adapters.ViewPagerAdapter;
 import com.sendbird.datinglab.fragments.AccountFragment;
 import com.sendbird.datinglab.fragments.CustomChannelListFragment;
 import com.sendbird.datinglab.fragments.SwipeViewFragment;
+import com.sendbird.uikit.fragments.ChannelListFragment;
 
 import java.util.ArrayList;
 
@@ -36,28 +37,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         BottomNavigationView bnv = findViewById(R.id.bottom_navigation);
 
-        /**
-         *  GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
-         *
-         *         ChannelListFragment.Builder builder = new ChannelListFragment
-         *                 .Builder()
-         *                 .setUseHeader(false)
-         *                 .setGroupChannelListQuery(query);
-         *
-         *         ChannelListFragment fragment = builder.build();
-         */
 
+        //TODO SENDBIRD IMPL
         GroupChannelListQuery query = GroupChannel.createMyGroupChannelListQuery();
 
         query.setIncludeEmpty(true);
 
-
         query.setOrder(GroupChannelListQuery.Order.CHRONOLOGICAL);
-        com.sendbird.uikit.fragments.ChannelListFragment.Builder builder = new com.sendbird.uikit.fragments.ChannelListFragment.Builder()
+        ChannelListFragment.Builder builder = new ChannelListFragment.Builder()
                 .setUseHeader(false)
                 .setGroupChannelListQuery(query);
 
-        com.sendbird.uikit.fragments.ChannelListFragment fragment = builder.build();
+       ChannelListFragment fragment = builder.build();
+
+       //END
 
         ArrayList<Fragment> fragList = new ArrayList<>();
         fragList.add(new AccountFragment());
@@ -69,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         viewPager.setOffscreenPageLimit(3);
         bnv.setOnNavigationItemSelectedListener(this);
 
-//        BaseApplication.getCustomUserListQuery();
 
     }
 

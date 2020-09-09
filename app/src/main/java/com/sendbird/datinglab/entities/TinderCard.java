@@ -34,6 +34,7 @@ public class TinderCard {
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
+    //TODO SENDBIRD
     public TinderCard(Context context, User user, SwipePlaceHolderView swipeView) {
         mContext = context;
          mUser = user;
@@ -43,6 +44,8 @@ public class TinderCard {
     public User getUser() {
         return mUser;
     }
+
+    //END
 
     @Resolve
     private void onResolved(){

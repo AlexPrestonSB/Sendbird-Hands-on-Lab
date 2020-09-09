@@ -20,6 +20,7 @@ public class BaseApplication extends Application {
 
     private String userId;
     private String userNickname;
+    private final String APP_ID = "C659F842-231B-44B2-92A0-FB92A2328875";
 
     @Override
     public void onCreate() {
@@ -31,7 +32,7 @@ public class BaseApplication extends Application {
         SendBirdUIKit.init(new SendBirdUIKitAdapter() {
             @Override
             public String getAppId() {
-                return "C659F842-231B-44B2-92A0-FB92A2328875";
+                return APP_ID;
             }
 
             @Override
@@ -69,36 +70,4 @@ public class BaseApplication extends Application {
         this.userNickname = userNickname;
     }
 
-
-    public static CustomUserListQueryHandler getCustomUserListQuery() {
-        final ApplicationUserListQuery userListQuery = SendBird.createApplicationUserListQuery();
-        //userListQuery.setMetaDataFilter("dating", Collections.singletonList("True"));
-        return new CustomUserListQueryHandler() {
-            @Override
-            public void loadInitial(UserListResultHandler handler) {
-                userListQuery.setLimit(5);
-                userListQuery.next((list, e) -> {
-                    if (e != null) {
-                        return;
-                    }
-
-                    List<MyUserInfo> customUserList = new ArrayList<>();
-                    for (User user : list) {
-                        customUserList.add(new MyUserInfo(user));
-                    }
-                    handler.onResult(customUserList, null);
-                });
-            }
-
-            @Override
-            public void loadNext(UserListResultHandler userListResultHandler) {
-
-            }
-
-            @Override
-            public boolean hasMore() {
-                return false;
-            }
-        };
-    }
 }
