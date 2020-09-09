@@ -1,30 +1,31 @@
 package com.sendbird.datinglab.entities;
 
+import com.sendbird.android.User;
 import com.sendbird.uikit.interfaces.UserInfo;
 
+/**
+ * TODO SENDBIRD
+ */
 public class MyUserInfo implements UserInfo {
 
-    private String userId;
-    private String nickname;
+    User user;
 
-
-    public void setUserInfo(String userId, String nickname) {
-        this.userId = userId;
-        this.nickname = nickname;
-    }
+  public MyUserInfo(User user) {
+      this.user = user;
+  }
 
     @Override
     public String getUserId() {
-        return userId;
+        return user.getUserId();
     }
 
     @Override
     public String getNickname() {
-        return nickname;
+        return user.getNickname();
     }
 
     @Override
     public String getProfileUrl() {
-        return "null";
+        return user.getProfileUrl();
     }
 }

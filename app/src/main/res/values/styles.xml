@@ -2,12 +2,12 @@
 
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/sendbird_purple</item>
+        <item name="colorAccent">@color/sendbird_purple</item>
         <item name="elevation">0dp</item>
-        <item name="colorControlNormal">@color/md_white_1000</item>
+        <item name="colorControlNormal">@color/sendbird_purple</item>
         <!--  It should be true otherwise action mode will not overlay toolbar -->
         <item name="windowActionModeOverlay">true</item>
 
@@ -21,22 +21,22 @@
         <item name="windowActionModeOverlay">true</item>
 
         <!--  For Custom Action Mode Background Color/Drawable -->
-        <item name="actionModeBackground">@color/md_grey_300</item>
+        <item name="actionModeBackground">@color/sendbird_purple</item>
     </style>
 
 
     <style name="WhiteStatusBar" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@color/md_white_1000</item>
+        <item name="android:statusBarColor">@color/sendbird_purple</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="BlackStatusBar" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@color/md_black_1000</item>
+        <item name="android:statusBarColor">@color/sendbird_purple</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="PinkStatusBar" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/sendbird_purple</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,18 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.sendbird.android.ApplicationUserListQuery;
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelParams;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
-import com.sendbird.datinglab.Utils;
-import com.sendbird.datinglab.entities.Profile;
-import com.sendbird.datinglab.entities.TinderCard;
+import com.sendbird.datinglab.utils.Utils;
+import com.sendbird.datinglab.entities.DatingCard;
+import com.sendbird.uikit.log.Logger;
+
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +37,9 @@ import com.sendbird.datinglab.entities.TinderCard;
 public class SwipeViewFragment extends Fragment {
 
 
+    final private String SWIPE_FRAGMENT = "SWIPE_FRAGMENT";
     private View rootLayout;
-    private FloatingActionButton fabBack, fabLike, fabSkip, fabSuperLike, fabBoost;
+    private FloatingActionButton fabLike, fabSkip;
 
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
@@ -53,11 +63,8 @@ public class SwipeViewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSwipeView = view.findViewById(R.id.swipeView);
-        fabBack = view.findViewById(R.id.fabBack);
         fabLike = view.findViewById(R.id.fabLike);
         fabSkip = view.findViewById(R.id.fabSkip);
-        fabSuperLike = view.findViewById(R.id.fabSuperLike);
-        fabBoost = view.findViewById(R.id.fabBoost);
 
 
         mContext = getActivity();
@@ -76,9 +83,30 @@ public class SwipeViewFragment extends Fragment {
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
 
 
-        for(Profile profile : Utils.loadProfiles(getActivity())){
-            mSwipeView.addView(new TinderCard(mContext, profile, mSwipeView));
-        }
+        /**
+         * TODO SENDBIRD
+         */
+
+        ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
+        query.setLimit(100); //Whatever you want
+        query.setMetaDataFilter("dating", Collections.singletonList("True"));
+        query.setMetaDataFilter("sex", Collections.singletonList("female"));
+
+        query.next((list, e) -> {
+            if (e != null) {
+                Log.e(SWIPE_FRAGMENT, e.getMessage());
+                return;
+            }
+
+            for (User user : list) {
+                if (!user.getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                    mSwipeView.addView(new DatingCard(mContext, user, mSwipeView));
+                }
+            }
+
+        });
+
+        //END
 
         fabSkip.setOnClickListener(v -> {
             animateFab(fabSkip);
@@ -87,17 +115,41 @@ public class SwipeViewFragment extends Fragment {
 
         fabLike.setOnClickListener(v -> {
             animateFab(fabLike);
+
+            //TODO SENDBIRD IMPL
+            DatingCard user = (DatingCard) mSwipeView.getAllResolvers().get(0);
+            User profile = user.getUser();
+            createChannelWithMatch(profile);
+            //END
+
             mSwipeView.doSwipe(true);
         });
 
-        fabBoost.setOnClickListener(v -> animateFab(fabBoost));
-        fabSuperLike.setOnClickListener(v -> animateFab(fabSuperLike));
-        fabBack.setOnClickListener(v -> animateFab(fabBack));
     }
 
 
-    private void animateFab(final FloatingActionButton fab){
+    private void animateFab(final FloatingActionButton fab) {
         fab.animate().scaleX(0.7f).setDuration(100).withEndAction(() -> fab.animate().scaleX(1f).scaleY(1f));
+    }
+
+    /**
+     * TODO SENDBIRD
+     *
+     * @param user
+     */
+    private void createChannelWithMatch(User user) {
+        GroupChannelParams params = new GroupChannelParams();
+        params.setDistinct(true)
+                .addUser(user);
+
+        GroupChannel.createChannel(params, (groupChannel, e) -> {
+            if (e != null) {
+                Logger.e(e.getMessage());
+                return;
+            }
+            Logger.d(groupChannel.getUrl() + ": Channel Created");
+
+        });
     }
 
 }
