@@ -126,18 +126,19 @@ public class SwipeViewFragment extends Fragment {
     }
 
 
-    private void animateFab(final FloatingActionButton fab){
+    private void animateFab(final FloatingActionButton fab) {
         fab.animate().scaleX(0.7f).setDuration(100).withEndAction(() -> fab.animate().scaleX(1f).scaleY(1f));
     }
 
     /**
      * TODO SENDBIRD
+     *
      * @param user
      */
     private void createChannelWithMatch(User user) {
         GroupChannelParams params = new GroupChannelParams();
-
-        params.addUser(user);
+        params.setDistinct(true)
+                .addUser(user);
 
         GroupChannel.createChannel(params, new GroupChannel.GroupChannelCreateHandler() {
             @Override

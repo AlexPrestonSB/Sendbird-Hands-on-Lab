@@ -24,10 +24,16 @@
             android:name="com.sendbird.datinglab.activities.MainActivity"
             android:theme="@style/BlackStatusBar"/>
         <activity
-            android:name="com.sendbird.datinglab.activities.CustomMemberListActivity"
+            android:name="com.sendbird.datinglab.activities.LoginActivity"
             android:theme="@style/BlackStatusBar"/>
         <activity
-            android:name="com.sendbird.datinglab.activities.LoginActivity"
+            android:name="com.sendbird.datinglab.activities.CustomChannelActivity"
+            android:theme="@style/BlackStatusBar"/>
+        <activity
+            android:name="com.sendbird.datinglab.activities.CustomChannelSettingsActivity"
+            android:theme="@style/BlackStatusBar"/>
+        <activity
+            android:name="com.sendbird.datinglab.activities.CustomMemberListActivity"
             android:theme="@style/BlackStatusBar"/>
     </application>
 
