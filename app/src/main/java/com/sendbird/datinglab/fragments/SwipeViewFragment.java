@@ -22,7 +22,6 @@ import com.sendbird.android.ApplicationUserListQuery;
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelParams;
 import com.sendbird.android.SendBird;
-import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.utils.Utils;
@@ -79,8 +78,8 @@ public class SwipeViewFragment extends Fragment {
                         .setViewGravity(Gravity.TOP)
                         .setPaddingTop(20)
                         .setRelativeScale(0.01f)
-                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
-                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
+                        .setSwipeInMsgLayoutId(R.layout.dating_swipe_in_msg_view)
+                        .setSwipeOutMsgLayoutId(R.layout.dating_swipe_out_msg_view));
 
 
         /**
@@ -105,6 +104,7 @@ public class SwipeViewFragment extends Fragment {
             }
 
         });
+
 
         //END
 
