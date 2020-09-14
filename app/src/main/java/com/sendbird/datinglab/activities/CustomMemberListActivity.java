@@ -22,5 +22,4 @@ public class CustomMemberListActivity extends MemberListActivity {
                 .setItemLongClickListener(null)
                 .build();
     }
-
 }

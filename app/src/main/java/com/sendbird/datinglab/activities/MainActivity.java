@@ -17,6 +17,7 @@ import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.adapters.ViewPagerAdapter;
 import com.sendbird.datinglab.fragments.AccountFragment;
 import com.sendbird.datinglab.fragments.SwipeViewFragment;
+import com.sendbird.uikit.activities.ChannelListActivity;
 import com.sendbird.uikit.fragments.ChannelListFragment;
 
 
@@ -41,11 +42,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         fragList.add(new AccountFragment());
         fragList.add(new SwipeViewFragment());
         fragList.add(getChatFragment()); //TODO SENDBIRD
+
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fragList, getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         bnv.setOnNavigationItemSelectedListener(this);
+
     }
 
     /**
@@ -59,11 +62,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         ChannelListFragment.Builder builder = new ChannelListFragment.Builder()
                 .setUseHeader(false)
-                .setItemClickListener((view, i, channel)-> showCustomChannelActivity(channel.getUrl()))
+                .setItemClickListener(((view, i, channel) -> showCustomChannelActivity(channel.getUrl())))
                 .setGroupChannelListQuery(query);
 
         return builder.build();
-
     }
 
     /**

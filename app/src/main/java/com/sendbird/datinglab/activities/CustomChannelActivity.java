@@ -1,10 +1,12 @@
 package com.sendbird.datinglab.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
 import com.sendbird.datinglab.fragments.CustomChannelFragment;
+import com.sendbird.datinglab.utils.StringSet;
 import com.sendbird.uikit.activities.ChannelActivity;
 import com.sendbird.uikit.fragments.ChannelFragment;
 
@@ -40,14 +42,14 @@ public class CustomChannelActivity extends ChannelActivity {
             return;
         }
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Pick message type")
-//                .setMultiChoiceItems(new String[]{StringSet.highlight},
-//                        new boolean[]{customChannelFragment.isHighlightMode()},
-//                        (dialog, which, isChecked) -> {
-//                            customChannelFragment.setHighlightMode(isChecked);
-//                        })
-//                .create()
-//                .show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick message type")
+                .setMultiChoiceItems(new String[]{StringSet.highlight},
+                        new boolean[]{customChannelFragment.isHighlightMode()},
+                        (dialog, which, isChecked) -> {
+                            customChannelFragment.setHighlightMode(isChecked);
+                        })
+                .create()
+                .show();
     }
 }
