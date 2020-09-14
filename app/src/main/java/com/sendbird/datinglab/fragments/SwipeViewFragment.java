@@ -88,8 +88,8 @@ public class SwipeViewFragment extends Fragment {
 
         ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
         query.setLimit(100); //Whatever you want
-        query.setMetaDataFilter("dating", Collections.singletonList("True"));
-        query.setMetaDataFilter("sex", Collections.singletonList("female"));
+//        query.setMetaDataFilter("dating", Collections.singletonList("True")); //Can be used if you set your own metadata on your created users. 
+//        query.setMetaDataFilter("sex", Collections.singletonList("female"));
 
         query.next((list, e) -> {
             if (e != null) {
