@@ -33,30 +33,7 @@ public class LoginActivity extends AppCompatActivity {
          * TODO SENDBIRD
          */
         findViewById(R.id.btSignIn).setOnClickListener(v -> {
-            String userId = etUserId.getText().toString();
-            // Remove all spaces from userID
-            userId = userId.replaceAll("\\s", "");
-
-            String userNickname = etNickname.getText().toString();
-            if (userId.isEmpty() || userNickname.isEmpty()) {
-                return;
-            }
-
-            ((BaseApplication)getApplication()).setUserId(userId);
-            ((BaseApplication)getApplication()).setUserNickname(userNickname);
-
-            WaitingDialog.show(this);
-            SendBirdUIKit.connect((user, e) -> {
-                if (e != null) {
-                    Logger.e(e);
-                    WaitingDialog.dismiss();
-                    return;
-                }
-                WaitingDialog.dismiss();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            });
+       
         });
     }
 }

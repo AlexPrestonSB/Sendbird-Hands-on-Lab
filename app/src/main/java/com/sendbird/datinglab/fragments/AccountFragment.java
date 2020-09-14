@@ -45,9 +45,7 @@ public class AccountFragment extends Fragment {
 
 
         //TODO SENDBIRD
-        Glide.with(this).load(SendBird.getCurrentUser().getProfileUrl()).fitCenter().into(profileImage);
-        userName.setText(SendBird.getCurrentUser().getNickname());
-        userInfo.setText("About Me: Likes " + SendBird.getCurrentUser().getMetaData("Likes"));
+
         // END
         return rootLayout;
     }

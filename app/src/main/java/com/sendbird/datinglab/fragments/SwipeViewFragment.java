@@ -18,17 +18,10 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.sendbird.android.ApplicationUserListQuery;
-import com.sendbird.android.GroupChannel;
-import com.sendbird.android.GroupChannelParams;
-import com.sendbird.android.SendBird;
-import com.sendbird.android.User;
+
 import com.sendbird.datinglab.R;
 import com.sendbird.datinglab.utils.Utils;
-import com.sendbird.datinglab.entities.DatingCard;
-import com.sendbird.uikit.log.Logger;
 
-import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,24 +79,7 @@ public class SwipeViewFragment extends Fragment {
          * TODO SENDBIRD
          */
 
-        ApplicationUserListQuery query = SendBird.createApplicationUserListQuery();
-        query.setLimit(100); //Whatever you want
-        query.setMetaDataFilter("dating", Collections.singletonList("True"));
-        query.setMetaDataFilter("sex", Collections.singletonList("female"));
 
-        query.next((list, e) -> {
-            if (e != null) {
-                Log.e(SWIPE_FRAGMENT, e.getMessage());
-                return;
-            }
-
-            for (User user : list) {
-                if (!user.getUserId().equals(SendBird.getCurrentUser().getUserId())) {
-                    mSwipeView.addView(new DatingCard(mContext, user, mSwipeView));
-                }
-            }
-
-        });
 
 
         //END
@@ -117,9 +93,7 @@ public class SwipeViewFragment extends Fragment {
             animateFab(fabLike);
 
             //TODO SENDBIRD IMPL
-            DatingCard user = (DatingCard) mSwipeView.getAllResolvers().get(0);
-            User profile = user.getUser();
-            createChannelWithMatch(profile);
+
             //END
 
             mSwipeView.doSwipe(true);
@@ -137,19 +111,6 @@ public class SwipeViewFragment extends Fragment {
      *
      * @param user
      */
-    private void createChannelWithMatch(User user) {
-        GroupChannelParams params = new GroupChannelParams();
-        params.setDistinct(true)
-                .addUser(user);
 
-        GroupChannel.createChannel(params, (groupChannel, e) -> {
-            if (e != null) {
-                Logger.e(e.getMessage());
-                return;
-            }
-            Logger.d(groupChannel.getUrl() + ": Channel Created");
-
-        });
-    }
 
 }
