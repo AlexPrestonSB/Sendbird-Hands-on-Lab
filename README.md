@@ -11,8 +11,8 @@ This guide is intended for you to have a reference for how to implement chat int
 ### Getting Started
 
 1. Clone the repo.
-2. Check out the default branch
-3. Open the project and wait for the Gradle to Sync
+2. Check out the default branch.
+3. Open the project and wait for the Gradle to Sync.
 4. Run the project on an emulator or physical device.  
 
 The default branch is the finished product. The branch labled 'starter-project' is the shell where we will be starting. 
@@ -244,6 +244,158 @@ private void createChannelWithMatch(User user) {
 }
 
 ```
+
+## Push Notifications
+
+This section is not covered in this lab and only shows the code required to make pushes work, not the prerequsite set up. To get started on the Push Notification prerequsite setup we recommend checking out our [documentation](https://docs.sendbird.com/android/push_notifications#2_push_notifications_for_android), and following the guide on our docs to set up pushes in either [FCM](https://docs.sendbird.com/android/push_notifications#3_push_notifications_for_fcm) or [HMS](https://docs.sendbird.com/android/push_notifications#3_push_notifications_for_hms).
+
+The following is taken from our [Sendbird UIKit sample app](https://github.com/sendbird/SendBird-Android/tree/master/uikit), and covers the main portions of implementation for implementing Push Notifications. 
+
+Create a PushUtils.java class
+
+```sh
+ public static void registerPushHandler(SendBirdPushHandler handler) {
+        SendBirdPushHelper.registerPushHandler(handler);
+    }
+
+  public static void unregisterPushHandler(SendBirdPushHelper.OnPushRequestCompleteListener listener) {
+        SendBirdPushHelper.unregisterPushHandler(listener);
+    }
+```
+Create a MyFireBaseMessagingService.java class(This will be different for HMS). This class handles all the set up required to implement Push Notifications. It handles the events for when new tokens are issues, handles receiving pushes, and shows how to handle Push Notifications it terms of displaying them with Notification Manager.  
+
+```sh
+
+public class MyFirebaseMessagingService extends SendBirdPushHandler {
+
+    private static final String TAG = "MyFirebaseMsgService";
+    private static final AtomicReference<String> pushToken = new AtomicReference<>();
+
+    public interface ITokenResult {
+        void onPushTokenReceived(String pushToken, SendBirdException e);
+    }
+
+    @Override
+    protected boolean isUniquePushToken() {
+        return false;
+    }
+
+    @Override
+    public void onNewToken(String token) {
+        Log.i(TAG, "onNewToken(" + token + ")");
+        pushToken.set(token);
+    }
+
+    /**
+     * Called when message is received.
+     *
+     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
+     */
+    @Override
+    public void onMessageReceived(Context context, RemoteMessage remoteMessage) {
+        Logger.d("From: " + remoteMessage.getFrom());
+        if (remoteMessage.getData().size() > 0) {
+            Logger.d( "Message data payload: " + remoteMessage.getData());
+        }
+
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Logger.d( "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+
+        try {
+            if (remoteMessage.getData().containsKey(StringSet.sendbird)) {
+                String jsonStr = remoteMessage.getData().get(StringSet.sendbird);
+                JSONObject sendBird = new JSONObject(jsonStr);
+                JSONObject channel = sendBird.getJSONObject(StringSet.channel);
+                String channelUrl = channel.getString(StringSet.channel_url);
+
+                SendBird.markAsDelivered(channelUrl);
+                sendNotification(context, sendBird);
+
+            }
+        } catch (JSONException e) {
+            Logger.e(e);
+        }
+    }
+
+    /**
+     * Create and show a simple notification containing the received FCM message.
+     *
+     * @param sendBird JSONObject payload from FCM
+     */
+    public static void sendNotification(@NonNull Context context, @NonNull JSONObject sendBird) throws JSONException {
+        String message = sendBird.getString(StringSet.message);
+        JSONObject channel = sendBird.getJSONObject(StringSet.channel);
+        String channelUrl = channel.getString(StringSet.channel_url);
+
+        JSONObject sender = sendBird.getJSONObject(StringSet.sender);
+        String senderName = sender.getString(StringSet.name);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        final String CHANNEL_ID = StringSet.CHANNEL_ID;
+        if (Build.VERSION.SDK_INT >= 26) {  // Build.VERSION_CODES.O
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, StringSet.CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        Intent intent = ChannelListActivity.newRedirectToChannelIntent(context, channelUrl);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon_push_lollipop)
+                .setColor(ContextCompat.getColor(context, R.color.primary_300))  // small icon background color
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_push_oreo))
+                .setContentTitle(senderName)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(pendingIntent);
+        notificationBuilder.setContentText(message);
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+
+    public static void getPushToken(ITokenResult listener) {
+        String token = pushToken.get();
+        if (!TextUtils.isEmpty(token)) {
+            listener.onPushTokenReceived(token, null);
+            return;
+        }
+
+        SendBirdPushHelper.getPushToken((token1, e) -> {
+            Log.d(TAG, "FCM token : " + token1);
+            if (listener != null) {
+                listener.onPushTokenReceived(token1, e);
+            }
+
+            if (e == null) {
+                pushToken.set(token1);
+            }
+        });
+    }
+}
+
+```
+
+In your sample app's BaseApplication.java after the init call.
+```sh
+PushUtils.registerPushHandler(new MyFirebaseMessagingService());
+```
+In your LoginActivity.java after the connect call returns successfully before launching the to the next activity. 
+
+```sh
+PushUtils.registerPushHandler(new MyFirebaseMessagingService());
+```
+
+## Trouble Shooting push notifications
+
+Attached is a [FAQ on Push Notifications](https://view.highspot.com/viewer/5ef55777811717173b465ee0), what they are, how to implement them, and more importantly what to do to help trouble shoot issues with pushes. 
 
 <a name="credits"></a>
 ## Credits
